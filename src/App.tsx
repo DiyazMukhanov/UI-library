@@ -1,24 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import DropdownMenu from './components/Dropdown';
 
 function App() {
+  const dropDownClickHandler = (value: string) => {
+    console.log(value)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <DropdownMenu>
+        <DropdownMenu.Trigger> 
+            <button>Menu</button>
+        </DropdownMenu.Trigger>
+         <DropdownMenu.Content className='dropdownContent'>
+          <DropdownMenu.Item value='Курица' onClick={dropDownClickHandler}>
+             Курица
+          </DropdownMenu.Item>
+         </DropdownMenu.Content>
+      </DropdownMenu>
     </div>
   );
 }
