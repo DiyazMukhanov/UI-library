@@ -1,22 +1,26 @@
+import { useState } from 'react';
 import './App.css';
 import DropdownMenu from './components/Dropdown';
 
 function App() {
-  const dropDownClickHandler = (value: string) => {
-    console.log(value)
-  }
+  const [selectedItem, setSelectedItem] = useState<string>('');
+
+  const handleChange = (value: string) => {
+    setSelectedItem(value);
+    console.log(value);
+  };
 
   return (
     <div className="App">
-      <DropdownMenu>
-        <DropdownMenu.Trigger> 
-            <button>Menu</button>
+      <h2>Выбранный айтем: {selectedItem}</h2>
+      <DropdownMenu value={selectedItem} onChange={handleChange}>
+        <DropdownMenu.Trigger>
+          <button>Menu</button>
         </DropdownMenu.Trigger>
-         <DropdownMenu.Content className='dropdownContent'>
-          <DropdownMenu.Item value='Курица' onClick={dropDownClickHandler}>
-             Курица
-          </DropdownMenu.Item>
-         </DropdownMenu.Content>
+        <DropdownMenu.Content className="dropdownContent">
+          <DropdownMenu.Item value="Курица">Курица</DropdownMenu.Item>
+          <DropdownMenu.Item value="Шашлычок">Шашлычок</DropdownMenu.Item>
+        </DropdownMenu.Content>
       </DropdownMenu>
     </div>
   );
