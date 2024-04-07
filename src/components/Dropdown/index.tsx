@@ -34,10 +34,8 @@ type DrowdownProps = {
 const DropdownMenu = ({ children, value, onChange }: DrowdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState<Position | null>(null);
-  const [selectedValue, setSelectedValue] = useState<string | null>(value);
 
   const setValue = (newValue: string) => {
-    setSelectedValue(newValue);
     onChange(newValue);
     setIsOpen(false);
   };
@@ -49,7 +47,7 @@ const DropdownMenu = ({ children, value, onChange }: DrowdownProps) => {
         setIsOpen,
         position,
         setPosition,
-        value: selectedValue,
+        value,
         setValue,
       }}
     >
@@ -69,17 +67,22 @@ const Trigger = ({ children, className }: TriggerAndContentProps) => {
 
   const onTriggerClickHandler = (e: React.MouseEvent) => {
     setIsOpen(!isOpen);
-    if (!setPosition) return;
 
-    const hoveredElement = e.currentTarget as HTMLElement;
+    const triggerElement = e.currentTarget as HTMLElement;
+
+    const { top, left } = triggerElement.getBoundingClientRect();
 
     setPosition({
-      top: hoveredElement.getBoundingClientRect().top,
-      left: hoveredElement.getBoundingClientRect().left,
+      top,
+      left,
     });
   };
 
-  return <div onClick={onTriggerClickHandler}>{children}</div>;
+  return (
+    <div onClick={onTriggerClickHandler} className={className}>
+      {children}
+    </div>
+  );
 };
 
 const Content = ({ children, className }: TriggerAndContentProps) => {
@@ -89,21 +92,18 @@ const Content = ({ children, className }: TriggerAndContentProps) => {
     return null;
   }
 
-  return (
-    position &&
-    createPortal(
-      <div
-        className={className}
-        style={{
-          position: 'absolute',
-          top: position?.top + 40,
-          left: position?.left,
-        }}
-      >
-        {children}
-      </div>,
-      document.body
-    )
+  return createPortal(
+    <div
+      className={className}
+      style={{
+        position: 'absolute',
+        top: position?.top + 40,
+        left: position?.left,
+      }}
+    >
+      {children}
+    </div>,
+    document.body
   );
 };
 
