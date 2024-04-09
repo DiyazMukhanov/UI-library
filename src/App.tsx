@@ -11,6 +11,8 @@ const options = [
   'fruits',
   'cheese',
   'cheeo',
+  'chano',
+  'chelly',
 ];
 
 function App() {

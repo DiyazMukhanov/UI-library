@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type Props = {
   options: any[];
@@ -21,19 +21,16 @@ export const Autocomplete = ({
   const [filteredOptions, setFilteredOptions] = useState<any[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const userInput = e.target.value;
-    setInputValue(userInput);
-    setShowDropdown(true);
+  useEffect(() => {
+    const filteredData = options.filter((option) =>
+      option.toLowerCase().includes(inputValue.toLowerCase())
+    );
+    setFilteredOptions(inputValue ? filteredData : []);
+  }, [inputValue, options]);
 
-    if (userInput) {
-      const filteredData = options.filter((option) =>
-        option.toLowerCase().includes(userInput.toLowerCase())
-      );
-      setFilteredOptions(filteredData);
-    } else {
-      setFilteredOptions([]);
-    }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+    setShowDropdown(true);
   };
 
   const handleOptionClick = (value: string) => {
