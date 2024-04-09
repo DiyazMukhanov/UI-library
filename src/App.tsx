@@ -1,6 +1,17 @@
 import { memo, useState } from 'react';
 import './App.css';
-import DropdownMenu from './components/Dropdown';
+import { Autocomplete } from './components/Autocomplete';
+
+const options = [
+  'apple',
+  'chicken',
+  'souce',
+  'soup',
+  'kebab',
+  'fruits',
+  'cheese',
+  'cheeo',
+];
 
 function App() {
   const [selectedItem, setSelectedItem] = useState<string>('');
@@ -15,15 +26,14 @@ function App() {
     <div className="App">
       {/* <h1>{counter}</h1> */}
       <h2>Выбранный айтем: {selectedItem}</h2>
-      <DropdownMenu value={selectedItem} onChange={handleChange}>
-        <DropdownMenu.Trigger>
-          <button>Menu</button>
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Content className="dropdownContent">
-          <DropdownMenu.Item value="Курица">Курица</DropdownMenu.Item>
-          <DropdownMenu.Item value="Шашлычок">Шашлычок</DropdownMenu.Item>
-        </DropdownMenu.Content>
-      </DropdownMenu>
+      <Autocomplete
+        options={options}
+        inputPlaceholder="выберите еду"
+        containerClassName="container"
+        inputClassName="input"
+        dropdownClassName="dropdown"
+        onChange={handleChange}
+      />
       {/* <button onClick={() => setCounter(counter + 1)}>+ count</button> */}
       {/* <Child arr={[1, 2, 3]} /> */}
     </div>
